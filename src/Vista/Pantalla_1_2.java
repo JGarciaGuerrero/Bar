@@ -1,13 +1,10 @@
 package Vista;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import Controlador.Controlador_1_2;
-import Modelo.ConexionBBDD;
 import Modelo.Productos;
 import Modelo.TMProductos;
 
@@ -16,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import java.awt.SystemColor;
 import java.awt.Font;
@@ -26,14 +22,19 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Pantalla_1_2 extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField txtNombre;
 	private JTextField txtPrecio;
@@ -41,7 +42,6 @@ public class Pantalla_1_2 extends JDialog{
 	private JTable table;
 	private JScrollPane scrollPane;
 	
-	private ConexionBBDD conexion;
 	private TMProductos TablaDatos;
 	private ArrayList<String> ListaCat;
 	private Controlador_1_2 controlador_12;
@@ -94,6 +94,16 @@ public class Pantalla_1_2 extends JDialog{
 		
 		
 		txtNombre = new JTextField();
+		txtNombre.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent arg0) {
+				txtNombre.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				if(txtNombre.getText().equals("")) {
+					txtNombre.setText("Producto");
+				}
+			}
+		});
 		txtNombre.setFont(new Font("Verdana", Font.PLAIN, 24));
 		txtNombre.setText("Producto");
 		txtNombre.setBounds(24, 148, 299, 38);
@@ -105,6 +115,16 @@ public class Pantalla_1_2 extends JDialog{
 		
 		
 		txtPrecio = new JTextField();
+		txtPrecio.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent arg0) {
+				txtPrecio.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				if(txtPrecio.getText().equals("")) {
+					txtPrecio.setText("Precio");
+				}
+			}
+		});
 		txtPrecio.setFont(new Font("Verdana", Font.PLAIN, 24));
 		txtPrecio.setText("Precio");
 		txtPrecio.setBounds(24, 224, 299, 38);
@@ -114,6 +134,16 @@ public class Pantalla_1_2 extends JDialog{
 		
 		
 		txtNombreCategoria = new JTextField();
+		txtNombreCategoria.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent arg0) {
+				txtNombreCategoria.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				if(txtNombreCategoria.getText().equals("")) {
+					txtNombreCategoria.setText("Categoria");
+				}
+			}
+		});
 		txtNombreCategoria.setFont(new Font("Verdana", Font.PLAIN, 24));
 		txtNombreCategoria.setText("Categoria");
 		txtNombreCategoria.setBounds(24, 57, 257, 49);

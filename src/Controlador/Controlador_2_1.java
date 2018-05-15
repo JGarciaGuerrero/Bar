@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import Modelo.ConexionBBDD;
 import Modelo.Contiene;
-import Modelo.Productos;
-import Modelo.TMContiene;
 import Vista.Pantalla_2_1;
 import Vista.Pantalla_2_2;
 

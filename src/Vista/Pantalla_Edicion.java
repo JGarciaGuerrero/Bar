@@ -1,6 +1,5 @@
 package Vista;
 
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +20,10 @@ import java.awt.event.ActionEvent;
 
 public class Pantalla_Edicion extends JDialog{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField_Pro;
 	private JTextField textField_Pre;

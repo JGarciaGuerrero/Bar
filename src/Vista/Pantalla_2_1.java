@@ -1,18 +1,14 @@
 package Vista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Controlador.Controlador_1_2;
 import Controlador.Controlador_2_1;
 import Modelo.Contiene;
-import Modelo.Productos;
 import Modelo.TMContiene;
-import Modelo.TMProductos;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -20,13 +16,14 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
-import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -157,6 +154,16 @@ public class Pantalla_2_1 {
 		frame.getContentPane().add(lblTotal);
 		
 		JLabel lblPagado = new JLabel("Pagado");
+		lblPagado.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent arg0) {
+				lblPagado.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				if(lblPagado.getText().equals("")) {
+					lblPagado.setText("€");
+				}
+			}
+		});
 		lblPagado.setFont(new Font("Verdana", Font.PLAIN, 24));
 		lblPagado.setBounds(391, 360, 105, 30);
 		frame.getContentPane().add(lblPagado);

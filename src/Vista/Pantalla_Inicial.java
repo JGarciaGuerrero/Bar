@@ -1,25 +1,19 @@
 package Vista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import javax.swing.UIManager;
 
 import Controlador.Controlador_Inicial;
-import Modelo.ConexionBBDD;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Pantalla_Inicial {
 
 	private JFrame frame;
-	private ConexionBBDD conexion;
 	private Controlador_Inicial controlador_ini;
 	private JButton btnAdmon;
 	JButton btnBar;

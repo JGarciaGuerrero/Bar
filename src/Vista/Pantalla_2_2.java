@@ -1,7 +1,6 @@
 package Vista;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
@@ -9,23 +8,19 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-import Controlador.Controlador_2_1;
 import Controlador.Controlador_2_2;
 import Modelo.ConexionBBDD;
-import Modelo.Contiene;
 import Modelo.Productos;
-import Modelo.TMContiene;
-import Modelo.TMProductos;
 
 
 import javax.swing.JButton;
-import javax.swing.UIManager;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -38,19 +33,14 @@ public class Pantalla_2_2 {
 
 	private JFrame frame;
 	private JTextField txtCantidad;
-	private JTable table;
 	private Pantalla_2_1 pantalla21;
 	private ConexionBBDD conexion;
-	private TMContiene TablaDatos;
 	private int mesa;
 	private ArrayList<String> lista;
-	private ArrayList<Productos> listaprod;
 	private JComboBox comboBox;
 	private JComboBox comboBox_1;
-	private Controlador_2_2 controlador22;
 	private JTable table_1;
 	private int seleccion;
-	private String nomb;
 
 	/**
 	 * Create the application.
@@ -98,6 +88,16 @@ public class Pantalla_2_2 {
 		frame.getContentPane().add(comboBox_1);
 
 		txtCantidad = new JTextField();
+		txtCantidad.addFocusListener(new FocusAdapter() {
+			public void focusGained(FocusEvent arg0) {
+				txtCantidad.setText("");
+			}
+			public void focusLost(FocusEvent e) {
+				if(txtCantidad.getText().equals("")) {
+					txtCantidad.setText("Cantidad");
+				}
+			}
+		});
 		txtCantidad.setFont(new Font("Verdana", Font.PLAIN, 24));
 		txtCantidad.setText("Cantidad");
 		txtCantidad.setBounds(365, 27, 156, 41);

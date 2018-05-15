@@ -1,21 +1,12 @@
 package Modelo;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Properties;
-
-import javax.swing.table.DefaultTableModel;
 
 public class ConexionBBDD {	
-	private String bd;
 	private String url= "jdbc:oracle:thin:@localhost:1521:XE";
 	private String usr = "";
 	private String pwd = "";
@@ -48,7 +39,6 @@ public class ConexionBBDD {
 		ArrayList<Productos> producto = new ArrayList<Productos>();
 		String query = "SELECT * FROM JORGE.producto WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM JORGE.categoria WHERE NOMBRE_CATEGORIA LIKE '"+ nombreCat +"') ORDER BY COD_PRODUCTO";
 		//SELECT COD_CATEGORIA, NOMBRE_PRODUCTO, PRECIO FROM PRODUCTO WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM CATEGORIA WHERE NOMBRE_CATEGORIA LIKE 'Cervezas');
-		System.out.println(query);
 		 
 		try {
 			Statement stmt = conexion.createStatement();

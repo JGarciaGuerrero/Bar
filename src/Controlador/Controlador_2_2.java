@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import Modelo.ConexionBBDD;
 import Modelo.Contiene;
 import Modelo.Productos;
-import Vista.Pantalla_1_2;
-import Vista.Pantalla_2_2;
 
 public class Controlador_2_2 {
 	

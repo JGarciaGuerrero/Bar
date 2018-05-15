@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.util.Properties;
 
 import Modelo.ConexionBBDD;
-import Vista.Pantalla_1_2;
-import Vista.Pantalla_2_1;
 import Vista.Pantalla_Inicial;
 
 public class Main {
