@@ -94,7 +94,7 @@ public class Pantalla_2_1 {
 		});
 		btnAadir.setBounds(69, 111, 73, 73);
 		btnAadir.setToolTipText("A\u00F1adir Comanda");
-		btnAadir.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\a\u00F1adir\\mipmap-xhdpi\\ic_launcher.png"));
+		btnAadir.setIcon(new ImageIcon("src//Media//Anadir.png"));
 		frame.getContentPane().add(btnAadir);
 		
 		
@@ -104,7 +104,7 @@ public class Pantalla_2_1 {
 		});
 		btnGuardar.setBounds(69, 279, 73, 73);
 		btnGuardar.setToolTipText("Pagar y guardar");
-		btnGuardar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\Guardar\\mipmap-xhdpi\\ic_launcher.png"));
+		btnGuardar.setIcon(new ImageIcon("src//Media//Guardar.png"));
 		frame.getContentPane().add(btnGuardar);
 		
 		JButton btnFinalizar = new JButton("");
@@ -115,7 +115,7 @@ public class Pantalla_2_1 {
 		
 		btnFinalizar.setBounds(69, 195, 73, 73);
 		btnFinalizar.setToolTipText("Hacer ticket");
-		btnFinalizar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\ok\\mipmap-xhdpi\\ic_launcher.png"));
+		btnFinalizar.setIcon(new ImageIcon("src//Media//Ok.png"));
 		frame.getContentPane().add(btnFinalizar);
 		
 		JScrollPane scrollPane = new JScrollPane();

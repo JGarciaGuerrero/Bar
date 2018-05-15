@@ -115,7 +115,7 @@ public class Pantalla_2_2 {
 			}
 		});
 		btnAadir.setToolTipText("A\u00F1adir");
-		btnAadir.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\a\u00F1adir\\mipmap-xhdpi\\ic_launcher.png"));
+		btnAadir.setIcon(new ImageIcon("src//Media//Anadir.png"));
 		btnAadir.setBounds(67, 197, 59, 59);
 		frame.getContentPane().add(btnAadir);
 
@@ -130,7 +130,7 @@ public class Pantalla_2_2 {
 			}
 		});
 		btnCancelar.setToolTipText("Retroceder");
-		btnCancelar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\atras\\atras\\mipmap-xhdpi\\ic_launcher.png"));
+		btnCancelar.setIcon(new ImageIcon("src//Media//Atras.png"));
 		btnCancelar.setBounds(383, 197, 59, 59);
 		frame.getContentPane().add(btnCancelar);
 
@@ -154,7 +154,7 @@ public class Pantalla_2_2 {
 			}
 		});
 		btnAceptar.setToolTipText("Aceptar");
-		btnAceptar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\ok\\mipmap-xhdpi\\ic_launcher.png"));
+		btnAceptar.setIcon(new ImageIcon("src//Media//Ok.png"));
 		btnAceptar.setBounds(304, 197, 59, 59);
 		frame.getContentPane().add(btnAceptar);
 
@@ -163,7 +163,7 @@ public class Pantalla_2_2 {
 			
 		});
 		btnEliminar.setToolTipText("Eliminar");
-		btnEliminar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\eliminar\\mipmap-xhdpi\\ic_launcher.png"));
+		btnEliminar.setIcon(new ImageIcon("src//Media//Eliminar.png"));
 		btnEliminar.setBounds(148, 197, 59, 59);
 		frame.getContentPane().add(btnEliminar);
 

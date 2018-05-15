@@ -1,0 +1,3 @@
+[Parametros]
+User = "SYSTEM"
+Password = "Elr0botoni"

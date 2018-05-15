@@ -21,7 +21,7 @@ public class Main {
 		String pwd = "";
 		
 		try {
-			File miFichero = new File("C:\\configuracion.txt");
+			File miFichero = new File("src//configuracion.txt");
 			if(miFichero.exists()) {
 				entrada = new FileInputStream(miFichero);
 				propiedades.load(entrada);

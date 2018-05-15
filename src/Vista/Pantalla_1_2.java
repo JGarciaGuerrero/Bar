@@ -84,8 +84,8 @@ public class Pantalla_1_2 extends JDialog{
 				
 		});
 		
-		btnOk.setToolTipText("A\u00F1adir");
-		btnOk.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\ok\\mipmap-xhdpi\\ic_launcher.png"));
+		btnOk.setToolTipText("Ok");
+		btnOk.setIcon(new ImageIcon("src//Media//Ok.png"));
 		btnOk.setFont(new Font("Verdana", Font.PLAIN, 24));
 		btnOk.setBounds(24, 374, 73, 73);
 		frame.getContentPane().add(btnOk);
@@ -130,7 +130,7 @@ public class Pantalla_1_2 extends JDialog{
 		btnCancelar.addActionListener(new Escuchador_Cancelar() {
 				
 		});
-		btnCancelar.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\eliminar\\mipmap-xhdpi\\ic_launcher.png"));
+		btnCancelar.setIcon(new ImageIcon("src//Media//Eliminar.png"));
 		btnCancelar.setFont(new Font("Verdana", Font.PLAIN, 24));
 		btnCancelar.setBounds(126, 374, 73, 73);
 		frame.getContentPane().add(btnCancelar);
@@ -147,7 +147,7 @@ public class Pantalla_1_2 extends JDialog{
 			}
 		});
 		btnAtrassssssssssss.setToolTipText("Retroceder");
-		btnAtrassssssssssss.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\atras\\atras\\mipmap-xhdpi\\ic_launcher.png"));
+		btnAtrassssssssssss.setIcon(new ImageIcon("src//Media//Atras.png"));
 		btnAtrassssssssssss.setFont(new Font("Verdana", Font.PLAIN, 24));
 		btnAtrassssssssssss.setBounds(226, 374, 73, 73);
 		frame.getContentPane().add(btnAtrassssssssssss);
@@ -214,7 +214,7 @@ public class Pantalla_1_2 extends JDialog{
 				controlador_12.AnadirMesa();
 			}
 		});
-		btnNewMesa.setIcon(new ImageIcon("C:\\Users\\DAW1\\Desktop\\Jhota\\Clases\\Proyectito\\Imagenes\\a\u00F1adir\\mipmap-xhdpi\\ic_launcher.png"));
+		btnNewMesa.setIcon(new ImageIcon("src//Media//Anadir.png"));
 		btnNewMesa.setBounds(327, 374, 73, 73);
 		frame.getContentPane().add(btnNewMesa);
 		
