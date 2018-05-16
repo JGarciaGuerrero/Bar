@@ -17,6 +17,8 @@ public class Main {
 		InputStream entrada = null;
 		String usr = "";
 		String pwd = "";
+		String schema = "";
+		String url = "";
 		
 		try {
 			File miFichero = new File("src//configuracion.txt");
@@ -25,6 +27,7 @@ public class Main {
 				propiedades.load(entrada);
 				usr = String.valueOf(propiedades.getProperty("User"));
 				pwd = String.valueOf(propiedades.getProperty("Password"));
+				schema = String.valueOf(propiedades.getProperty("Schema"));
 			}else {
 				System.err.println("Fichero no encontrado");
 			}
@@ -40,7 +43,7 @@ public class Main {
 				}
 			}
 		}
-		ConexionBBDD conexion = new ConexionBBDD(usr, pwd);
+		ConexionBBDD conexion = new ConexionBBDD(usr, pwd, schema);
 		Pantalla_Inicial pantalla_ini = new Pantalla_Inicial();
 		Controlador_Inicial controlador_ini = new Controlador_Inicial(conexion, pantalla_ini);
 		

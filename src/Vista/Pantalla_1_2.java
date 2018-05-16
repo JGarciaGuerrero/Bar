@@ -1,6 +1,7 @@
 package Vista;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -207,16 +208,21 @@ public class Pantalla_1_2 extends JDialog{
 		table = new JTable();
 		
 		table.addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				seleccion = table.rowAtPoint(e.getPoint());
-				Productos p = new Productos(0, null, 0, 0);
-				nomb = String.valueOf(table.getValueAt(seleccion, 1));
-				System.out.println(table.getValueAt(seleccion, 1));
-					
-				p = TablaDatos.getRow(seleccion);  					
-				controlador_12.AbrirPantallaEdicion(p);					
+				System.out.println(TablaDatos == null);
+
+				if(TablaDatos == null) {
+					JOptionPane.showMessageDialog(null, "Elige Categoria");
+				}else {
+					seleccion = table.rowAtPoint(e.getPoint());
+					nomb = String.valueOf(table.getValueAt(seleccion, 1));
+					Productos p = new Productos(0, null, 0, 0);
+					p = TablaDatos.getRow(seleccion);  					
+					controlador_12.AbrirPantallaEdicion(p);				
+				}
+				
+				
 				
 			}
 		});
@@ -242,6 +248,7 @@ public class Pantalla_1_2 extends JDialog{
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				controlador_12.AnadirMesa();
+				JOptionPane.showMessageDialog(null, "Mesa añadida");
 			}
 		});
 		btnNewMesa.setIcon(new ImageIcon("src//Media//Anadir.png"));
@@ -256,6 +263,7 @@ public class Pantalla_1_2 extends JDialog{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==comboBox) {
 				if(!comboBox.getSelectedItem().toString().equals("Añadir...")) {
+					
 					TablaDatos = new TMProductos(controlador_12.ActualizarTablaProductos((String)comboBox.getSelectedItem()));
 					table.setModel(TablaDatos);	
 				}else if(comboBox.getSelectedItem().toString().equals("Añadir...")) {
@@ -274,10 +282,37 @@ public class Pantalla_1_2 extends JDialog{
 			String newCat = String.valueOf(txtNombreCategoria.getText());
 			String cat = String.valueOf(comboBox.getSelectedItem());
 			String newNomb = txtNombre.getText();
-			double newPre = Double.parseDouble(txtPrecio.getText());
+			double newPre = 0;
+			
+			char[] aux = new char[1];
+			int aux_coma = 0;
+			
+			for(int i = 0; i < String.valueOf(txtPrecio.getText()).length(); i++) {
+				aux[0] = String.valueOf(txtPrecio.getText()).charAt(i);
+				
+				if(aux[0] == 46 || aux[0] == 44) {
+					aux_coma ++;
+				}
+			}
+			
+			for(int i = 0; i < String.valueOf(txtPrecio.getText()).length(); i++) {
+				aux[0] = String.valueOf(txtPrecio.getText()).charAt(i);
+				
+				if(aux[0] < 48 || aux[0] > 57 || aux_coma > 1 && aux[0] != 46 && aux[0] != 44) {
+					if(aux[0] != 46 && aux[0] != 44) {
+						JOptionPane.showMessageDialog(null, "Introduce un número");
+						break;
+					}
+
+				}else {
+					
+					newPre = Double.parseDouble(String.valueOf(txtPrecio.getText()).replace(',', '.'));
+					
+				}
+			}
+
 			
 			if(!cat.equals("Añadir...") && !newNomb.equals(null) && newPre != 0) {
-				
 				controlador_12.AnadirTablaProductos(cat, newNomb, newPre);
 				TablaDatos = new TMProductos(controlador_12.ActualizarTablaProductos((String)comboBox.getSelectedItem()));
 				table.setModel(TablaDatos);

@@ -10,13 +10,15 @@ public class ConexionBBDD {
 	private String url= "jdbc:oracle:thin:@localhost:1521:XE";
 	private String usr = "";
 	private String pwd = "";
+	String schema = "";
 	private Connection conexion;
 	
 
-	public ConexionBBDD(String usr, String pwd)  {
+	public ConexionBBDD(String usr, String pwd, String schema)  {
 		this.usr = usr;
 		this.pwd = pwd;
-
+		this.schema = schema;
+		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conexion = DriverManager.getConnection(this.url, this.usr, this.pwd);
@@ -37,7 +39,7 @@ public class ConexionBBDD {
 	
 	public ArrayList<Productos> ConsultaTablaProductos(String nombreCat) { //Rellenar la tabla de productos con los productos existentes en el admin
 		ArrayList<Productos> producto = new ArrayList<Productos>();
-		String query = "SELECT * FROM JORGE.producto WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM JORGE.categoria WHERE NOMBRE_CATEGORIA LIKE '"+ nombreCat +"') ORDER BY COD_PRODUCTO";
+		String query = "SELECT * FROM "+schema+".producto WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM "+schema+".categoria WHERE NOMBRE_CATEGORIA LIKE '"+ nombreCat +"') ORDER BY COD_PRODUCTO";
 		//SELECT COD_CATEGORIA, NOMBRE_PRODUCTO, PRECIO FROM PRODUCTO WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM CATEGORIA WHERE NOMBRE_CATEGORIA LIKE 'Cervezas');
 		 
 		try {
@@ -65,7 +67,7 @@ public class ConexionBBDD {
 	
 	public ArrayList<String> ConsultaTablaCat(){ //Consultar la tabla de categorias, se usa para hacer un filtro
 		ArrayList<String> lista = new ArrayList<String>();
-		String query = "SELECT * FROM JORGE.categoria";
+		String query = "SELECT * FROM "+schema+".categoria";
 		 
 		try {
 			Statement stmt = conexion.createStatement();
@@ -84,7 +86,7 @@ public class ConexionBBDD {
 	
 	public ArrayList<Contiene> ConsultaTablaCont(int mesa){
 		ArrayList<Contiene> lista = new ArrayList<Contiene>();
-		String query = "SELECT C.Cantidad_Producto, C.Total_Producto, C.Cod_Comanda, P.Nombre_Producto FROM JORGE.Contiene C, JORGE.Producto P, JORGE.Comandas Co WHERE Co.Num_Mesa = "+mesa+" AND C.Cod_Comanda = Co.Cod_Comanda AND P.Cod_Producto=C.Cod_Producto ORDER BY C.Cod_Comanda";
+		String query = "SELECT C.Cantidad_Producto, C.Total_Producto, C.Cod_Comanda, P.Nombre_Producto FROM "+schema+".Contiene C, "+schema+".Producto P, "+schema+".Comandas Co WHERE Co.Num_Mesa = "+mesa+" AND C.Cod_Comanda = Co.Cod_Comanda AND P.Cod_Producto=C.Cod_Producto ORDER BY C.Cod_Comanda";
 		//SELECT C.Cantidad_Producto, C.Total_Producto, C.Cod_Comanda, P.Nombre_Producto FROM JORGE.Contiene C, JORGE.Producto P, JORGE.Comandas Co WHERE Co.Num_Mesa = 1 AND C.Cod_Comanda = Co.Cod_Comanda AND P.Cod_Producto=C.Cod_Producto ORDER BY C.Cod_Comanda
 		
 		try {
@@ -114,7 +116,7 @@ public class ConexionBBDD {
 		double precio = p.getPrecio();
 		int resultado = 0;
 		
-		String query = "UPDATE JORGE.producto SET PRECIO="+precio+", NOMBRE_PRODUCTO='"+nombre+"' WHERE COD_PRODUCTO = "+cod;
+		String query = "UPDATE "+schema+".producto SET PRECIO="+precio+", NOMBRE_PRODUCTO='"+nombre+"' WHERE COD_PRODUCTO = "+cod;
 		//UPDATE producto SET PRECIO=2, NOMBRE_PRODUCTO='Coca' WHERE COD_PRODUCTO=1
 		try {
 			Statement stmt = conexion.createStatement();
@@ -132,7 +134,7 @@ public class ConexionBBDD {
 	
 	public void AnadirProductos(String nombreCat, String nombrePro, Double pre) {
 		
-		String query ="INSERT INTO JORGE.producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM JORGE.Producto), '"+nombrePro+"', "+pre+", (SELECT Cod_Categoria FROM JORGE.categoria WHERE NOMBRE_CATEGORIA LIKE '"+nombreCat+"'))";
+		String query ="INSERT INTO "+schema+".producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM "+schema+".Producto), '"+nombrePro+"', "+pre+", (SELECT Cod_Categoria FROM "+schema+".categoria WHERE NOMBRE_CATEGORIA LIKE '"+nombreCat+"'))";
 		//INSERT INTO Producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM Producto), 'Prueba', 12, (SELECT Cod_Categoria FROM categoria WHERE NOMBRE_CATEGORIA LIKE 'Cervezas'))
 		int resultado = 0;
 		try {
@@ -147,7 +149,7 @@ public class ConexionBBDD {
 	}
 	
 	public void DeleteProductos(String nomb) {
-		String query = "DELETE FROM JORGE.producto WHERE NOMBRE_PRODUCTO LIKE '"+nomb+"'";
+		String query = "DELETE FROM "+schema+".producto WHERE NOMBRE_PRODUCTO LIKE '"+nomb+"'";
 		System.out.println(query);
 		int resultado = 0;
 		try {
@@ -161,7 +163,7 @@ public class ConexionBBDD {
 	}
 	
 	public void AnadirCat(String nombreCat) {
-		String query = "INSERT INTO JORGE.Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM JORGE.Categoria ), '"+nombreCat+"')";
+		String query = "INSERT INTO "+schema+".Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM "+schema+".Categoria ), '"+nombreCat+"')";
 		//INSERT INTO Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM Categoria ), 'Snacks')
 		int resultado = 0;
 		try {
@@ -176,7 +178,7 @@ public class ConexionBBDD {
 	
 	public void DeleteMesa(int mesa) {
 		ArrayList<Integer> aux = new ArrayList<Integer>();
-		String query_aux = "SELECT COD_COMANDA FROM JORGE.COMANDAS WHERE NUM_MESA = "+mesa;
+		String query_aux = "SELECT COD_COMANDA FROM "+schema+".COMANDAS WHERE NUM_MESA = "+mesa;
 		//SELECT COD_COMANDA FROM COMANDAS WHERE NUM_MESA = 2
 		try {
 			Statement stmt = conexion.createStatement();
@@ -195,7 +197,7 @@ public class ConexionBBDD {
 		
 		
 		for(int i = 0; i < aux.size(); i++) {
-			String query = "DELETE FROM JORGE.CONTIENE WHERE COD_COMANDA = "+aux.get(i);
+			String query = "DELETE FROM "+schema+".CONTIENE WHERE COD_COMANDA = "+aux.get(i);
 			//DELETE FROM CONTIENE WHERE COD_COMANDA = 3
 			int resultado = 0;
 			try {
@@ -211,7 +213,7 @@ public class ConexionBBDD {
 	}
 	
 	public int HacerTicket(int mesa) {
-		String query = "SELECT SUM(TOTAL_COMANDA) FROM JORGE.COMANDAS WHERE NUM_MESA = "+mesa;
+		String query = "SELECT SUM(TOTAL_COMANDA) FROM "+schema+".COMANDAS WHERE NUM_MESA = "+mesa;
 		int total = 0;
 		try {
 			Statement stmt = conexion.createStatement();
@@ -232,7 +234,7 @@ public class ConexionBBDD {
 	}
 	
 	public void GuardarTicket(double total, int num_mesa){
-		String query = "INSERT INTO JORGE.Ticket (Cod_Ticket, Precio) VALUES ((SELECT MAX(Cod_Ticket + 1) FROM JORGE.ticket), "+total+")";
+		String query = "INSERT INTO "+schema+".Ticket (Cod_Ticket, Precio) VALUES ((SELECT MAX(Cod_Ticket + 1) FROM "+schema+".ticket), "+total+")";
 		//INSERT INTO JORGE.Ticket (Cod_Ticket, Precio) VALUES ((SELECT MAX(Cod_Ticket + 1) FROM JORGE.ticket), 10)
 		int resultado = 0;
 		try {
@@ -244,7 +246,7 @@ public class ConexionBBDD {
 			s.printStackTrace();
 		}
 		
-		String query_Cont = "INSERT INTO JORGE.Genera (Num_Mesa, Cod_Ticket, Fecha) VALUES ("+num_mesa+", (SELECT MAX(Cod_Ticket + 1) FROM JORGE.Genera), SYSDATE)";
+		String query_Cont = "INSERT INTO "+schema+".Genera (Num_Mesa, Cod_Ticket, Fecha) VALUES ("+num_mesa+", (SELECT MAX(Cod_Ticket + 1) FROM "+schema+".Genera), SYSDATE)";
 		//INSERT INTO Genera (Num_Mesa, Cod_Ticket, Fecha) VALUES (1, (SELECT MAX(Cod_Ticket + 1) FROM Genera), SYSDATE);
 		int resultado_aux = 0;
 		try {
@@ -259,7 +261,7 @@ public class ConexionBBDD {
 	}
 	
 	public void AnadirMesa() {
-		String query = "INSERT INTO JORGE.Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM JORGE.Mesa), 'I', 0)";
+		String query = "INSERT INTO "+schema+".Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM "+schema+".Mesa), 'I', 0)";
 		//INSERT INTO Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM JORGE.Mesa), 'I', 0);
 		int resultado = 0;
 		try {
@@ -274,7 +276,7 @@ public class ConexionBBDD {
 	
 	public ArrayList<Integer> RellenaMesa(){
 		ArrayList<Integer> aux = new ArrayList<Integer>();
-		String query = "SELECT NUM_MESA FROM JORGE.MESA";
+		String query = "SELECT NUM_MESA FROM "+schema+".MESA";
 		try {
 			Statement stmt = conexion.createStatement();
 			ResultSet rset = stmt.executeQuery(query);
@@ -293,7 +295,7 @@ public class ConexionBBDD {
 	}
 	
 	public void DeleteCat(String nombre) {
-		String query = "DELETE FROM JORGE.CATEGORIA WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM JORGE.CATEGORIA WHERE NOMBRE_CATEGORIA = '"+nombre+"')";
+		String query = "DELETE FROM "+schema+".CATEGORIA WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM "+schema+".CATEGORIA WHERE NOMBRE_CATEGORIA = '"+nombre+"')";
 		//DELETE FROM JORGE.CATEGORIA WHERE COD_CATEGORIA = (SELECT COD_CATEGORIA FROM JORGE.CATEGORIA WHERE NOMBRE_CATEGORIA = 'PRUEBA')
 		int resultado = 0;
 		try {
@@ -307,7 +309,7 @@ public class ConexionBBDD {
 	}
 	
 	public void NuevaComanda(int nummesa, ArrayList<String> tabla, ArrayList<String> tabla2, ArrayList<String> tabla3) {
-		String insertcom = "INSERT INTO JORGE.Comandas (COD_COMANDA, TOTAL_COMANDA, NUM_MESA) VALUES ((SELECT MAX(Cod_Comanda) +1 FROM JORGE.Comandas), 0, "+nummesa+")";
+		String insertcom = "INSERT INTO "+schema+".Comandas (COD_COMANDA, TOTAL_COMANDA, NUM_MESA) VALUES ((SELECT MAX(Cod_Comanda) +1 FROM "+schema+".Comandas), 0, "+nummesa+")";
 		int resultadocont=0;
 		int resultadocom=0;
 		int resultadoupd=0;
@@ -322,8 +324,8 @@ public class ConexionBBDD {
 		
 		for (int i = 0; i < tabla.size(); i++) {
 			try {
-				String insercont = "INSERT INTO JORGE.Contiene (CANTIDAD_PRODUCTO, TOTAL_PRODUCTO, COD_PRODUCTO, COD_COMANDA) VALUES "
-						+ "("+tabla.get(i)+","+tabla2.get(i)+", (SELECT Cod_Producto FROM JORGE.Producto WHERE Nombre_Producto = '"+tabla3.get(i)+"'), (SELECT MAX(Cod_Comanda) FROM JORGE.Comandas))";
+				String insercont = "INSERT INTO "+schema+".Contiene (CANTIDAD_PRODUCTO, TOTAL_PRODUCTO, COD_PRODUCTO, COD_COMANDA) VALUES "
+						+ "("+tabla.get(i)+","+tabla2.get(i)+", (SELECT Cod_Producto FROM "+schema+".Producto WHERE Nombre_Producto = '"+tabla3.get(i)+"'), (SELECT MAX(Cod_Comanda) FROM "+schema+".Comandas))";
 				Statement stmt = conexion.createStatement();
 				resultadocont = stmt.executeUpdate(insercont);
 				total = total + Integer.parseInt(tabla.get(i));
@@ -333,7 +335,7 @@ public class ConexionBBDD {
 		}
 		
 		try {
-			String updatecom = "UPDATE JORGE.Comandas SET Total_Comanda = "+total+" WHERE Cod_Comanda = (SELECT MAX(Cod_Comanda) FROM JORGE.Comandas)";
+			String updatecom = "UPDATE "+schema+".Comandas SET Total_Comanda = "+total+" WHERE Cod_Comanda = (SELECT MAX(Cod_Comanda) FROM "+schema+".Comandas)";
 			Statement stmt = conexion.createStatement();
 			resultadoupd = stmt.executeUpdate(updatecom);
 		}catch(SQLException s) {
@@ -343,7 +345,7 @@ public class ConexionBBDD {
 	}
 	
 	public int Producto(String nombreprod) {
-		String nombre = "SELECT Precio FROM JORGE.Producto WHERE Nombre_Producto = '"+nombreprod+"'";
+		String nombre = "SELECT Precio FROM "+schema+".Producto WHERE Nombre_Producto = '"+nombreprod+"'";
 		int resultado=0;
 		try {
 			Statement stmt = conexion.createStatement();

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class Pantalla_2_1 {
@@ -42,6 +43,7 @@ public class Pantalla_2_1 {
 	private JLabel lblPrecio;
 	private JLabel label;
 	private ArrayList<Integer> num_mesa_combo;
+	private JLabel lblPagado;
 
 
 	public Pantalla_2_1(ArrayList<Contiene> lista, Pantalla_Inicial pantalla_ini, ArrayList<Integer> mesa) {
@@ -85,8 +87,13 @@ public class Pantalla_2_1 {
 		btnAadir.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				int aux = comboBox.getSelectedIndex();
-				System.out.println(aux);
-				controlador_21.Abrir22(aux);
+				if(!String.valueOf(comboBox.getSelectedItem()).equals("Numero Mesa")) {
+					System.out.println(aux);
+					controlador_21.Abrir22(aux);
+				}else {
+					JOptionPane.showMessageDialog(null, "Elige mesa");
+				}
+
 			}
 		});
 		btnAadir.setBounds(69, 111, 73, 73);
@@ -98,6 +105,8 @@ public class Pantalla_2_1 {
 		JButton btnGuardar = new JButton("");
 		btnGuardar.addActionListener(new Escuchador_Ticket() {
 			
+			public void actionPerformed(ActionEvent e) {
+			}
 		});
 		btnGuardar.setBounds(69, 279, 73, 73);
 		btnGuardar.setToolTipText("Pagar y guardar");
@@ -112,7 +121,7 @@ public class Pantalla_2_1 {
 		
 		btnFinalizar.setBounds(69, 195, 73, 73);
 		btnFinalizar.setToolTipText("Hacer ticket");
-		btnFinalizar.setIcon(new ImageIcon("src//Media//Ok.png"));
+		btnFinalizar.setIcon(new ImageIcon("src//Media//Ticket.png"));
 		frame.getContentPane().add(btnFinalizar);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -153,7 +162,7 @@ public class Pantalla_2_1 {
 		lblTotal.setBounds(229, 360, 105, 30);
 		frame.getContentPane().add(lblTotal);
 		
-		JLabel lblPagado = new JLabel("Pagado");
+		lblPagado = new JLabel("Pagado");
 		lblPagado.addFocusListener(new FocusAdapter() {
 			public void focusGained(FocusEvent arg0) {
 				lblPagado.setText("");
@@ -167,6 +176,7 @@ public class Pantalla_2_1 {
 		lblPagado.setFont(new Font("Verdana", Font.PLAIN, 24));
 		lblPagado.setBounds(391, 360, 105, 30);
 		frame.getContentPane().add(lblPagado);
+		lblPagado.setText("€");
 		
 		JLabel lblDevuelto = new JLabel("Devuelto");
 		lblDevuelto.setFont(new Font("Verdana", Font.PLAIN, 24));
@@ -215,15 +225,20 @@ public class Pantalla_2_1 {
 	private class Escuchador_Fin implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			int mesa = Integer.parseInt(String.valueOf(comboBox.getSelectedItem().toString()));
-			controlador_21.DeleteMesa(mesa);
-			TablaDatos = new TMContiene(controlador_21.ActualizarTablaContiene(comboBox.getSelectedIndex()));
-			table.setModel(TablaDatos);
-			
-			lblPrecio.setVisible(true);
-			lblPrecio.setText(String.valueOf(controlador_21.HacerTicket(mesa)));
-			textField.setVisible(true);
-			label.setVisible(true);	
+			if(!String.valueOf(comboBox.getSelectedItem()).equals("Numero Mesa")) {
+				int mesa = Integer.parseInt(String.valueOf(comboBox.getSelectedItem().toString()));
+				controlador_21.DeleteMesa(mesa);
+				TablaDatos = new TMContiene(controlador_21.ActualizarTablaContiene(comboBox.getSelectedIndex()));
+				table.setModel(TablaDatos);
+				
+				lblPrecio.setVisible(true);
+				lblPrecio.setText(String.valueOf(controlador_21.HacerTicket(mesa)));
+				textField.setVisible(true);
+				label.setVisible(true);	
+			}else {
+				JOptionPane.showMessageDialog(null, "Elige mesa");
+			}
+
 		}
 		
 	}
@@ -238,12 +253,29 @@ public class Pantalla_2_1 {
 	private class Escuchador_Ticket implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			int num_mesa = Integer.parseInt(comboBox.getSelectedItem().toString());
-			double precio = Double.parseDouble(lblPrecio.getText());
-			double pagado = Double.parseDouble(textField.getText());
-			double total = pagado - precio;
-			label.setText(String.valueOf(total));
-			controlador_21.GuardarTicket(total, num_mesa);
+			
+			if(!String.valueOf(comboBox.getSelectedItem()).equals("Numero Mesa")) {
+				int num_mesa = Integer.parseInt(comboBox.getSelectedItem().toString());
+				double precio = Double.parseDouble(lblPrecio.getText());
+				double pagado = 0;
+				double total = -1;
+				if(textField.getText().equals("€") || textField.getText().equals(null)) {
+					pagado = Double.parseDouble(textField.getText());
+					total = pagado - precio;
+				}else {
+					JOptionPane.showMessageDialog(null, "Introduce una cifra");
+				}
+				if(total >= 0) {
+					label.setText(String.valueOf(total));
+					controlador_21.GuardarTicket(total, num_mesa);
+				}else {
+					JOptionPane.showMessageDialog(null, "Te intentan timar");
+				}
+
+			}else {
+				JOptionPane.showMessageDialog(null, "Elige mesa");
+			}
+
 			
 		}
 		
