@@ -133,18 +133,48 @@ public class ConexionBBDD {
 	
 	
 	public void AnadirProductos(String nombreCat, String nombrePro, Double pre) {
+		String query_aux = "SELECT * FROM "+schema+".producto";
+		String aux = "";
 		
-		String query ="INSERT INTO "+schema+".producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM "+schema+".Producto), '"+nombrePro+"', "+pre+", (SELECT Cod_Categoria FROM "+schema+".categoria WHERE NOMBRE_CATEGORIA LIKE '"+nombreCat+"'))";
-		//INSERT INTO Producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM Producto), 'Prueba', 12, (SELECT Cod_Categoria FROM categoria WHERE NOMBRE_CATEGORIA LIKE 'Cervezas'))
-		int resultado = 0;
 		try {
 			Statement stmt = conexion.createStatement();
-			resultado = stmt.executeUpdate(query);
+			ResultSet rset = stmt.executeQuery(query_aux);
+			if(rset.getRow() == 0) {
+				String query_2 ="INSERT INTO "+schema+".producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES (1, '"+nombrePro+"', "+pre+", (SELECT Cod_Categoria FROM "+schema+".categoria WHERE NOMBRE_CATEGORIA LIKE '"+nombreCat+"'))";
+				try {
+					Statement stmt_2 = conexion.createStatement();
+					ResultSet rset_2 = stmt.executeQuery(query_2);
+					rset_2.close();
+					stmt_2.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}
+				
+				
+				
+				
+				
+			}else {	
+				String query ="INSERT INTO "+schema+".producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM "+schema+".Producto), '"+nombrePro+"', "+pre+", (SELECT Cod_Categoria FROM "+schema+".categoria WHERE NOMBRE_CATEGORIA LIKE '"+nombreCat+"'))";
+				//INSERT INTO Producto (Cod_Producto, Nombre_Producto, Precio, Cod_Categoria) VALUES ((SELECT MAX(Cod_Producto) + 1 FROM Producto), 'Prueba', 12, (SELECT Cod_Categoria FROM categoria WHERE NOMBRE_CATEGORIA LIKE 'Cervezas'))
+				int resultado = 0;
+				try {
+					Statement stmt_2 = conexion.createStatement();
+					resultado = stmt_2.executeUpdate(query);
+					stmt_2.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}
+			}
+			rset.close();
 			stmt.close();
 			
 		}catch (SQLException s){
 			s.printStackTrace();
 		}
+
 		
 	}
 	
@@ -163,17 +193,47 @@ public class ConexionBBDD {
 	}
 	
 	public void AnadirCat(String nombreCat) {
-		String query = "INSERT INTO "+schema+".Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM "+schema+".Categoria ), '"+nombreCat+"')";
-		//INSERT INTO Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM Categoria ), 'Snacks')
-		int resultado = 0;
+		String query_aux = "SELECT * FROM "+schema+".Categoria";
+		String aux = "";
+		
 		try {
 			Statement stmt = conexion.createStatement();
-			resultado = stmt.executeUpdate(query);
+			ResultSet rset = stmt.executeQuery(query_aux);
+			if(rset.getRow() == 0) {
+				String query_2 = "INSERT INTO "+schema+".Categoria (Cod_Categoria, Nombre_Categoria) VALUES (1, '"+nombreCat+"')";
+				try {
+					Statement stmt_2 = conexion.createStatement();
+					ResultSet rset_2 = stmt.executeQuery(query_2);
+					rset_2.close();
+					stmt_2.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}
+
+
+				
+			}else {
+				String query = "INSERT INTO "+schema+".Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM "+schema+".Categoria ), '"+nombreCat+"')";
+				//INSERT INTO Categoria (Cod_Categoria, Nombre_Categoria) VALUES ((SELECT MAX(Cod_Categoria + 1) FROM Categoria ), 'Snacks')
+				int resultado = 0;
+				try {
+					Statement stmt_3 = conexion.createStatement();
+					resultado = stmt_3.executeUpdate(query);
+					stmt_3.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}
+				
+			}
+			rset.close();
 			stmt.close();
 			
 		}catch (SQLException s){
 			s.printStackTrace();
 		}
+
 	}
 	
 	public void DeleteMesa(int mesa) {
@@ -261,17 +321,45 @@ public class ConexionBBDD {
 	}
 	
 	public void AnadirMesa() {
-		String query = "INSERT INTO "+schema+".Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM "+schema+".Mesa), 'I', 0)";
-		//INSERT INTO Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM JORGE.Mesa), 'I', 0);
-		int resultado = 0;
+		String query_Aux = "SELECT * FROM "+schema+".Mesa";
 		try {
-			Statement stmt = conexion.createStatement();
-			resultado = stmt.executeUpdate(query);
-			stmt.close();
+			Statement stmt_2 = conexion.createStatement();
+			ResultSet rset_2 = stmt_2.executeQuery(query_Aux);
+			if(rset_2.getRow()==0) {
+				String query_aux_2 = "INSERT INTO "+schema+".Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES (1, 'I', 0)";
+				int resultado = 0;
+				try {
+					Statement stmt_3 = conexion.createStatement();
+					resultado = stmt_3.executeUpdate(query_aux_2);
+					stmt_3.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}	
+				
+			}else {
+						
+				String query = "INSERT INTO "+schema+".Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM "+schema+".Mesa), 'I', 0)";
+				//INSERT INTO Mesa (Num_Mesa, Lugar, Total_Gastado) VALUES ((SELECT MAX(Num_Mesa + 1) FROM JORGE.Mesa), 'I', 0);
+				int resultado = 0;
+				try {
+					Statement stmt = conexion.createStatement();
+					resultado = stmt.executeUpdate(query);
+					stmt.close();
+					
+				}catch (SQLException s){
+					s.printStackTrace();
+				}	
+				
+			}
+			
+			rset_2.close();
+			stmt_2.close();
 			
 		}catch (SQLException s){
 			s.printStackTrace();
 		}
+
 	}
 	
 	public ArrayList<Integer> RellenaMesa(){
