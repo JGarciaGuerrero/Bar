@@ -88,7 +88,6 @@ public class Pantalla_2_1 {
 			public void mouseClicked(MouseEvent e) {
 				int aux = comboBox.getSelectedIndex();
 				if(!String.valueOf(comboBox.getSelectedItem()).equals("Numero Mesa")) {
-					System.out.println(aux);
 					controlador_21.Abrir22(aux);
 				}else {
 					JOptionPane.showMessageDialog(null, "Elige mesa");

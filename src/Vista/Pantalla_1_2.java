@@ -210,7 +210,6 @@ public class Pantalla_1_2 extends JDialog{
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println(TablaDatos == null);
 
 				if(TablaDatos == null) {
 					JOptionPane.showMessageDialog(null, "Elige Categoria");
@@ -336,7 +335,6 @@ public class Pantalla_1_2 extends JDialog{
 
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			System.out.println(table.getSelectedRowCount());
 			if(table.getSelectedRowCount() >= 1) {
 				controlador_12.DeleteTablaProductos(nomb);
 				TablaDatos = new TMProductos(controlador_12.ActualizarTablaProductos((String)comboBox.getSelectedItem()));

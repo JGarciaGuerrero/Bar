@@ -180,7 +180,6 @@ public class ConexionBBDD {
 	
 	public void DeleteProductos(String nomb) {
 		String query = "DELETE FROM "+schema+".producto WHERE NOMBRE_PRODUCTO LIKE '"+nomb+"'";
-		System.out.println(query);
 		int resultado = 0;
 		try {
 			Statement stmt = conexion.createStatement();
